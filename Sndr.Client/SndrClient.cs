@@ -1,3 +1,6 @@
-﻿namespace Sndr.Client;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-public sealed class SndrClient;
+namespace Sndr.Client;
+
+public sealed partial class SndrClient(ILogger<SndrClient> logger, IOptions<SndrClientOptions> options, IHttpClientFactory clientFactory);
