@@ -6,7 +6,7 @@ public sealed partial class SndrClient
 {
     public async Task<SendResponse?> SendAsync(SendRequest request)
     {
-        const string destination = "/send";
+        const string destination = "https://api.sndr.sh/v1/send";
 
         var client = clientFactory.CreateClient(nameof(SndrClient));
 

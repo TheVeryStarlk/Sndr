@@ -8,7 +8,7 @@ public sealed class SendRequest
     public required string From { get; init; }
 
     [JsonPropertyName("to")]
-    public required string To { get; init; }
+    public required string[] To { get; init; }
 
     [JsonPropertyName("subject")]
     public required string Subject { get; init; }

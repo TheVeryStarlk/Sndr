@@ -2,5 +2,5 @@
 
 public sealed class SndrClientOptions
 {
-    public required string Key { get; init; }
+    public string? Key { get; set; }
 }
