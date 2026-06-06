@@ -4,7 +4,7 @@ namespace Sndr.Client;
 
 public static class SndrClientServiceCollectionExtensions
 {
-    public static IServiceCollection AddSndr(this IServiceCollection services, Action<SndrClientOptions> configure)
+    public static IServiceCollection AddSndrClient(this IServiceCollection services, Action<SndrClientOptions> configure)
     {
         services.Configure(configure);
 
