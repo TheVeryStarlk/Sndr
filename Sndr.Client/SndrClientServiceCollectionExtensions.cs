@@ -9,7 +9,6 @@ public static class SndrClientServiceCollectionExtensions
         services.Configure(configure);
 
         services.AddHttpClient(nameof(SndrClient));
-
         services.AddTransient<SndrClient>();
 
         return services;
