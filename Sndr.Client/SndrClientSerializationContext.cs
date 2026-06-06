@@ -2,7 +2,11 @@
 
 namespace Sndr.Client;
 
-[JsonSourceGenerationOptions(UseStringEnumConverter = true)]
+[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
+
+// Emails.
+[JsonSerializable(typeof(EmailResponse))]
+[JsonSerializable(typeof(PagedEmailResponse))]
 
 // Sending.
 [JsonSerializable(typeof(SendRequest))]
