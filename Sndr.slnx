@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="Sndr.Client/Sndr.Client.csproj" />
-  <Project Path="Sndr.Console/Sndr.Console.csproj" />
   <Project Path="Sndr.Tests/Sndr.Tests.csproj" />
 </Solution>

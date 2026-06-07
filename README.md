@@ -62,6 +62,5 @@ var request = new SendEmailRequest
 
 var response = await client.SendEmailAsync(request);
 
-// Output: In progress.
 Console.WriteLine(response.Status);
 ```
