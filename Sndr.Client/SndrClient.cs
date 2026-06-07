@@ -1,52 +1,23 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json.Serialization.Metadata;
-using Microsoft.Extensions.Options;
 
 namespace Sndr.Client;
 
-public sealed partial class SndrClient(IOptions<SndrClientOptions> options, IHttpClientFactory clientFactory);
+public sealed partial class SndrClient(IHttpClientFactory clientFactory);
 
-internal static class HttpClientExtensions
+internal static class ResponseMessageExtensions
 {
-    extension(HttpClient client)
+    public static async Task<TResponse?> DeserializeOrThrowAsync<TResponse>(this HttpResponseMessage message, JsonTypeInfo<TResponse> typeInfo)
     {
-        public async Task<TResponse?> GetAsync<TResponse>(
-            string destination,
-            JsonTypeInfo<TResponse> responseInfo)
+        if (message.IsSuccessStatusCode)
         {
-            var message = await client.GetAsync(destination);
-        
-            if (message.IsSuccessStatusCode)
-            {
-                // Serializer extensions for content.
-                return await message.Content.ReadFromJsonAsync(responseInfo);
-            }
-
-            var failure = await message.Content.ReadFromJsonAsync(SndrClientSerializationContext.Default.SndrFailureResponse);
-
-            ArgumentNullException.ThrowIfNull(failure);
-
-            throw new SndrClientException(failure.Response.Code, failure.Response.Message, failure.Response.Request);
+            return await message.Content.ReadFromJsonAsync(typeInfo);
         }
 
-        public async Task<TResponse?> PostAsync<TRequest, TResponse>(
-            string destination,
-            TRequest request,
-            JsonTypeInfo<TRequest> requestInfo,
-            JsonTypeInfo<TResponse> responseInfo)
-        {
-            var message = await client.PostAsJsonAsync(destination, request, requestInfo);
+        var failure = await message.Content.ReadFromJsonAsync(SndrClientSerializationContext.Default.SndrFailureResponse);
 
-            if (message.IsSuccessStatusCode)
-            {
-                return await message.Content.ReadFromJsonAsync(responseInfo);
-            }
+        ArgumentNullException.ThrowIfNull(failure);
 
-            var failure = await message.Content.ReadFromJsonAsync(SndrClientSerializationContext.Default.SndrFailureResponse);
-
-            ArgumentNullException.ThrowIfNull(failure);
-
-            throw new SndrClientException(failure.Response.Code, failure.Response.Message, failure.Response.Request);
-        }
+        throw new SndrClientException(failure.Response.Code, failure.Response.Message, failure.Response.Request);
     }
 }

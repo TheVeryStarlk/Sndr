@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using System.Net.Http.Json;
+using Microsoft.AspNetCore.WebUtilities;
 using Sndr.Client.Emails.Getting;
 using Sndr.Client.Emails.Sending;
 
@@ -16,29 +17,25 @@ public sealed partial class SndrClient
         };
 
         var client = clientFactory.CreateClient(nameof(SndrClient));
+        var response = await client.GetAsync(QueryHelpers.AddQueryString("emails", query));
 
-        return await client.GetAsync(
-            QueryHelpers.AddQueryString("emails", query),
-            SndrClientSerializationContext.Default.EmailPageResponse);
+        // How about a context for each folder?
+        return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.EmailPageResponse);
     }
 
     public async Task<EmailResponse?> GetEmailAsync(EmailRequest request)
     {
         var client = clientFactory.CreateClient(nameof(SndrClient));
+        var response = await client.GetAsync($"emails/{Uri.EscapeDataString(request.Identifier)}");
 
-        return await client.GetAsync(
-            $"emails/{Uri.EscapeDataString(request.Identifier)}",
-            SndrClientSerializationContext.Default.EmailResponse);
+        return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.EmailResponse);
     }
 
     public async Task<SendResponse?> SendEmailAsync(SendRequest request)
     {
         var client = clientFactory.CreateClient(nameof(SndrClient));
+        var response = await client.PostAsJsonAsync("send", request, SndrClientSerializationContext.Default.SendRequest);
 
-        return await client.PostAsync(
-            "send",
-            request,
-            SndrClientSerializationContext.Default.SendRequest,
-            SndrClientSerializationContext.Default.SendResponse);
+        return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.SendResponse);
     }
 }
