@@ -13,9 +13,7 @@ public sealed class EmailPageResponse
     [JsonPropertyName("has_more")]
     public required bool More { get; set; }
 
-    [JsonPropertyName("count")]
     public required int Count { get; set; }
 
-    [JsonPropertyName("limit")]
     public required int Limit { get; set; }
 }

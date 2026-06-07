@@ -5,7 +5,7 @@ using Sndr.Client.Emails.Sending;
 
 namespace Sndr.Client;
 
-[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
+[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower)]
 
 // Analytics.
 [JsonSerializable(typeof(SummaryRequest))]
