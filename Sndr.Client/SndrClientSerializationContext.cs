@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Sndr.Client.Sending;
+using Sndr.Client.Emails.Getting;
+using Sndr.Client.Emails.Sending;
 
 namespace Sndr.Client;
 
@@ -9,7 +10,9 @@ namespace Sndr.Client;
 [JsonSerializable(typeof(SndrFailureResponse))]
 [JsonSerializable(typeof(SndrFailureResponse.Failure))]
 
-// Sending.
+// Emails.
+[JsonSerializable(typeof(EmailResponse))]
+[JsonSerializable(typeof(EmailPageResponse))]
 [JsonSerializable(typeof(SendRequest))]
 [JsonSerializable(typeof(SendResponse))]
 internal sealed partial class SndrClientSerializationContext : JsonSerializerContext;

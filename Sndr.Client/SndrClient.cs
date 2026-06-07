@@ -8,24 +8,45 @@ public sealed partial class SndrClient(IOptions<SndrClientOptions> options, IHtt
 
 internal static class HttpClientExtensions
 {
-    public static async Task<TResponse?> PostAsync<TRequest, TResponse>(
-        this HttpClient client,
-        string destination,
-        TRequest request,
-        JsonTypeInfo<TRequest> requestInfo,
-        JsonTypeInfo<TResponse> responseInfo)
+    extension(HttpClient client)
     {
-        var message = await client.PostAsJsonAsync(destination, request, requestInfo);
-
-        if (message.IsSuccessStatusCode)
+        public async Task<TResponse?> GetAsync<TResponse>(
+            string destination,
+            JsonTypeInfo<TResponse> responseInfo)
         {
-            return await message.Content.ReadFromJsonAsync(responseInfo);
+            var message = await client.GetAsync(destination);
+        
+            if (message.IsSuccessStatusCode)
+            {
+                // Serializer extensions for content.
+                return await message.Content.ReadFromJsonAsync(responseInfo);
+            }
+
+            var failure = await message.Content.ReadFromJsonAsync(SndrClientSerializationContext.Default.SndrFailureResponse);
+
+            ArgumentNullException.ThrowIfNull(failure);
+
+            throw new SndrClientException(failure.Response.Code, failure.Response.Message, failure.Response.Request);
         }
 
-        var failure = await message.Content.ReadFromJsonAsync(SndrClientSerializationContext.Default.SndrFailureResponse);
+        public async Task<TResponse?> PostAsync<TRequest, TResponse>(
+            string destination,
+            TRequest request,
+            JsonTypeInfo<TRequest> requestInfo,
+            JsonTypeInfo<TResponse> responseInfo)
+        {
+            var message = await client.PostAsJsonAsync(destination, request, requestInfo);
 
-        ArgumentNullException.ThrowIfNull(failure);
+            if (message.IsSuccessStatusCode)
+            {
+                return await message.Content.ReadFromJsonAsync(responseInfo);
+            }
 
-        throw new SndrClientException(failure.Response.Code, failure.Response.Message, failure.Response.Request);
+            var failure = await message.Content.ReadFromJsonAsync(SndrClientSerializationContext.Default.SndrFailureResponse);
+
+            ArgumentNullException.ThrowIfNull(failure);
+
+            throw new SndrClientException(failure.Response.Code, failure.Response.Message, failure.Response.Request);
+        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Sndr.Client.Sending;
+namespace Sndr.Client.Emails.Getting;
 
-public sealed class SendResponse
+public sealed class EmailResponse
 {
     [JsonPropertyName("id")]
     public required string Identifier { get; init; }

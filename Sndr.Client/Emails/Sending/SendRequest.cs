@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Sndr.Client.Sending;
+namespace Sndr.Client.Emails.Sending;
 
 public sealed class SendRequest
 {
