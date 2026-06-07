@@ -1,9 +1,29 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json.Serialization.Metadata;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sndr.Client;
 
-public sealed partial class SndrClient(IHttpClientFactory clientFactory);
+public sealed partial class SndrClient
+{
+    private readonly IHttpClientFactory clientFactory;
+
+    public SndrClient(IHttpClientFactory clientFactory)
+    {
+        this.clientFactory = clientFactory;
+    }
+
+    public SndrClient(string key)
+    {
+        var collection = new ServiceCollection();
+
+        collection.AddSndrClient(options => options.Key = key);
+
+        clientFactory = collection
+            .BuildServiceProvider()
+            .GetRequiredService<IHttpClientFactory>();
+    }
+}
 
 internal static class ResponseMessageExtensions
 {
