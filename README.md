@@ -49,7 +49,7 @@ services.AddSndrClient(options =>
 
 This is just a single example of sending an email.
 
-```
+```cs
 var client = new SndrClient("...");
 
 var request = new SendEmailRequest
