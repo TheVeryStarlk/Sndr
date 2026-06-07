@@ -5,6 +5,10 @@ namespace Sndr.Client;
 
 [JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
 
+// Failure.
+[JsonSerializable(typeof(SndrFailureResponse))]
+[JsonSerializable(typeof(SndrFailureResponse.Failure))]
+
 // Sending.
 [JsonSerializable(typeof(SendRequest))]
 [JsonSerializable(typeof(SendResponse))]
