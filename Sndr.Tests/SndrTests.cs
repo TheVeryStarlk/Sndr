@@ -5,8 +5,7 @@ namespace Sndr.Tests;
 
 public sealed class SndrTests
 {
-    private readonly SndrClient client = new(Environment.GetEnvironmentVariable("Key", EnvironmentVariableTarget.User)
-                                             ?? throw new ArgumentException("No client key found."));
+    private readonly SndrClient client = new(Environment.GetEnvironmentVariable("Key") ?? throw new ArgumentException("No client key found."));
 
     [Fact]
     public async Task GettingSummaryAsync()
