@@ -12,8 +12,6 @@ public sealed partial class SndrClient
             ["range"] = request.Range
         };
 
-        var a = QueryHelpers.AddQueryString("analytics", query);
-
         var client = clientFactory.CreateClient(nameof(SndrClient));
         var response = await client.GetAsync(QueryHelpers.AddQueryString("analytics", query));
 
