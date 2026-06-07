@@ -2,7 +2,7 @@
 
 namespace Sndr.Client.Emails.Sending;
 
-public sealed class SendResponse
+public sealed class SendEmailResponse
 {
     [JsonPropertyName("id")]
     public required string Identifier { get; init; }

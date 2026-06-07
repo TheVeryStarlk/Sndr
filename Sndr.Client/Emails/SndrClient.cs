@@ -31,11 +31,11 @@ public sealed partial class SndrClient
         return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.EmailResponse);
     }
 
-    public async Task<SendResponse?> SendEmailAsync(SendRequest request)
+    public async Task<SendEmailResponse?> SendEmailAsync(SendEmailRequest request)
     {
         var client = clientFactory.CreateClient(nameof(SndrClient));
-        var response = await client.PostAsJsonAsync("send", request, SndrClientSerializationContext.Default.SendRequest);
+        var response = await client.PostAsJsonAsync("send", request, SndrClientSerializationContext.Default.SendEmailRequest);
 
-        return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.SendResponse);
+        return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.SendEmailResponse);
     }
 }

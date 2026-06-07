@@ -1,6 +1,6 @@
 ﻿namespace Sndr.Client.Emails.Sending;
 
-public sealed class SendRequest
+public sealed class SendEmailRequest
 {
     public required string From { get; init; }
 

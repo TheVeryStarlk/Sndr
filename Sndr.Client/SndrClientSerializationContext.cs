@@ -25,8 +25,8 @@ namespace Sndr.Client;
 // Emails.
 [JsonSerializable(typeof(EmailResponse))]
 [JsonSerializable(typeof(EmailPageResponse))]
-[JsonSerializable(typeof(SendRequest))]
-[JsonSerializable(typeof(SendResponse))]
+[JsonSerializable(typeof(SendEmailRequest))]
+[JsonSerializable(typeof(SendEmailResponse))]
 
 // Keys.
 [JsonSerializable(typeof(KeyResponse))]
