@@ -1,10 +1,15 @@
 ﻿using System.Text.Json.Serialization;
+using Sndr.Client.Analytics;
 using Sndr.Client.Emails.Getting;
 using Sndr.Client.Emails.Sending;
 
 namespace Sndr.Client;
 
 [JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
+
+// Analytics.
+[JsonSerializable(typeof(SummaryRequest))]
+[JsonSerializable(typeof(SummaryResponse))]
 
 // Failure.
 [JsonSerializable(typeof(SndrFailureResponse))]
