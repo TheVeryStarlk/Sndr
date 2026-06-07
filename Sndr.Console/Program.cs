@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sndr.Client;
 
-var services = new ServiceCollection()
-    .AddSndrClient(options => options.Key = Environment.GetEnvironmentVariable("Key"))
-    .BuildServiceProvider();
+var collection = new ServiceCollection();
 
+collection.AddSndrClient(options => options.Key = Environment.GetEnvironmentVariable("Key", EnvironmentVariableTarget.User));
+
+var services = collection.BuildServiceProvider();
 var client = services.GetRequiredService<SndrClient>();
 
+return;
