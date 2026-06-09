@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using Sndr.Client.Analytics;
+using Sndr.Client.Analytics.Getting;
 
 namespace Sndr.Client;
 

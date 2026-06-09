@@ -1,4 +1,5 @@
 ﻿using Sndr.Client;
+using Sndr.Client.Analytics.Getting;
 using Sndr.Client.Emails.Getting;
 
 namespace Sndr.Tests;

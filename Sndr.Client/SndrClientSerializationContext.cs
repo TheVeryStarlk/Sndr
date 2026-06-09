@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Sndr.Client.Analytics;
-using Sndr.Client.Domains;
+using Sndr.Client.Analytics.Getting;
+using Sndr.Client.Domains.Getting;
 using Sndr.Client.Emails.Getting;
 using Sndr.Client.Emails.Sending;
 using Sndr.Client.Keys;

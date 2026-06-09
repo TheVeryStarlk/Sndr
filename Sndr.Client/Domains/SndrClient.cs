@@ -1,4 +1,5 @@
-﻿using Sndr.Client.Domains;
+﻿using Sndr.Client.Domains.Getting;
+using Sndr.Client.Domains.Verification;
 
 namespace Sndr.Client;
 

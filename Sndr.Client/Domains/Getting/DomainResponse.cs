@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Sndr.Client.Domains;
+namespace Sndr.Client.Domains.Getting;
 
 public sealed class DomainResponse
 {

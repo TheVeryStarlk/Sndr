@@ -1,4 +1,4 @@
-﻿namespace Sndr.Client.Domains;
+﻿namespace Sndr.Client.Domains.Verification;
 
 public sealed class VerifyDomainRequest
 {

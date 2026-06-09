@@ -1,4 +1,4 @@
-﻿namespace Sndr.Client;
+﻿namespace Sndr.Client.Analytics.Getting;
 
 public sealed class SummaryRequest
 {

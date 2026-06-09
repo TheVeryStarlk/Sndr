@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Sndr.Client.Analytics;
+namespace Sndr.Client.Analytics.Getting;
 
 public sealed class SummaryResponse
 {
