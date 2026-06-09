@@ -19,7 +19,6 @@ public sealed partial class SndrClient
         var client = clientFactory.CreateClient(nameof(SndrClient));
         var response = await client.GetAsync(QueryHelpers.AddQueryString("emails", query), cancellationToken);
 
-        // How about a context for each folder?
         return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.EmailPageResponse);
     }
 

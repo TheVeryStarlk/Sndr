@@ -29,10 +29,16 @@ public sealed class SndrTests
 
         await client.GetEmailsAsync(request);
     }
-    
+
     [Fact]
     public async Task GettingKeysAsync()
     {
         await client.GetKeysAsync();
+    }
+
+    [Fact]
+    public async Task GettingTemplatesAsync()
+    {
+        await client.GetTemplatesAsync();
     }
 }

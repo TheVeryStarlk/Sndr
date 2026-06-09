@@ -2,5 +2,5 @@
 
 public sealed class SummaryRequest
 {
-    public string Range { get; set; } = "30d";
+    public string Range { get; init; } = "30d";
 }

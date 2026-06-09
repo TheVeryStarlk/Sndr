@@ -5,6 +5,7 @@ using Sndr.Client.Domains.Getting;
 using Sndr.Client.Emails.Getting;
 using Sndr.Client.Emails.Sending;
 using Sndr.Client.Keys;
+using Sndr.Client.Templates.Getting;
 
 namespace Sndr.Client;
 
@@ -33,4 +34,8 @@ namespace Sndr.Client;
 // Keys.
 [JsonSerializable(typeof(KeyResponse))]
 [JsonSerializable(typeof(KeyResponse.Key))]
+
+// Templates.
+[JsonSerializable(typeof(TemplatesResponse))]
+[JsonSerializable(typeof(TemplateResponse))]
 internal sealed partial class SndrClientSerializationContext : JsonSerializerContext;
