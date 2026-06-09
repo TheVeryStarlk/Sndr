@@ -1,7 +1,7 @@
 # Sndr
 
 A robust & AOT-friendly thin wrapper around [SNDR](https://www.sndr.sh/)'s API. \
-Still a work in progress & needs further testing. The important parts of the API are done. \
+Still a work in progress & needs further testing. The important parts of the API are done.
 
 ## Usage
 
@@ -11,13 +11,6 @@ The library can be easily used using DI or without it.
 
 ```cs
 var client = new SndrClient("...");
-
-var request = new SendEmailRequest
-{
-    // ...
-};
-
-var response = await client.SendEmailAsync(request);
 ```
 
 Or using DI.
@@ -61,6 +54,4 @@ var request = new SendEmailRequest
 };
 
 var response = await client.SendEmailAsync(request);
-
-Console.WriteLine(response.Status);
 ```
