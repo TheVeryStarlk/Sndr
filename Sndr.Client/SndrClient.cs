@@ -17,7 +17,7 @@ public sealed partial class SndrClient
     {
         var collection = new ServiceCollection();
 
-        collection.AddSndrClient(options => options.Key = key);
+        collection.AddSndrClientHttpClient(options => options.Key = key);
 
         clientFactory = collection
             .BuildServiceProvider()

@@ -8,40 +8,49 @@ namespace Sndr.Client;
 
 public static class SndrClientServiceCollectionExtensions
 {
-    public static IServiceCollection AddSndrClient(this IServiceCollection services, Action<SndrClientOptions> configure)
+    extension(IServiceCollection services)
     {
-        // Probably should validate the options too?
-        var options = new SndrClientOptions();
+        public IServiceCollection AddSndrClient(Action<SndrClientOptions> configure)
+        {
+            services.AddSndrClientHttpClient(configure);
+            services.AddTransient<SndrClient>();
 
-        configure(options);
+            return services;
+        }
 
-        services
-            .AddHttpClient(
-                nameof(SndrClient),
-                client =>
-                {
-                    // Think of a friendly way for API versioning. 
-                    client.BaseAddress = new Uri("https://api.sndr.sh/v1/");
+        public IServiceCollection AddSndrClientHttpClient(Action<SndrClientOptions> configure)
+        {
+            // Probably should validate the options too?
+            var options = new SndrClientOptions();
 
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", options.Key);
-                })
-            .AddResilienceHandler(
-                nameof(SndrClient),
-                builder => builder.AddRetry(new RetryStrategyOptions<HttpResponseMessage>
-                {
-                    ShouldHandle = new PredicateBuilder<HttpResponseMessage>()
-                        .Handle<HttpRequestException>()
-                        .HandleResult(response => response.StatusCode is HttpStatusCode.TooManyRequests or >= HttpStatusCode.InternalServerError),
+            configure(options);
 
-                    MaxRetryAttempts = options.MaximumAttempts,
-                    Delay = options.BaseDelay,
-                    BackoffType = DelayBackoffType.Exponential,
-                    UseJitter = true,
-                    MaxDelay = options.MaximumDelay
-                }));
+            services
+                .AddHttpClient(
+                    nameof(SndrClient),
+                    client =>
+                    {
+                        // Think of a friendly way for API versioning. 
+                        client.BaseAddress = new Uri("https://api.sndr.sh/v1/");
 
-        services.AddTransient<SndrClient>();
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", options.Key);
+                    })
+                .AddResilienceHandler(
+                    nameof(SndrClient),
+                    builder => builder.AddRetry(new RetryStrategyOptions<HttpResponseMessage>
+                    {
+                        ShouldHandle = new PredicateBuilder<HttpResponseMessage>()
+                            .Handle<HttpRequestException>()
+                            .HandleResult(response => response.StatusCode is HttpStatusCode.TooManyRequests or >= HttpStatusCode.InternalServerError),
 
-        return services;
+                        MaxRetryAttempts = options.MaximumAttempts,
+                        Delay = options.BaseDelay,
+                        BackoffType = DelayBackoffType.Exponential,
+                        UseJitter = true,
+                        MaxDelay = options.MaximumDelay
+                    }));
+
+            return services;
+        }
     }
 }
