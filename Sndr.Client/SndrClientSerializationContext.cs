@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Sndr.Client.Analytics.Getting;
+using Sndr.Client.Domains.Creating;
 using Sndr.Client.Domains.Getting;
 using Sndr.Client.Emails.Getting;
 using Sndr.Client.Emails.Sending;
@@ -14,6 +15,7 @@ namespace Sndr.Client;
 [JsonSerializable(typeof(SummaryResponse))]
 
 // Domains.
+[JsonSerializable(typeof(CreateDomainRequest))]
 [JsonSerializable(typeof(DomainResponse))]
 [JsonSerializable(typeof(DomainResponse.Domain))]
 [JsonSerializable(typeof(DomainResponse.Domain.Record))]
