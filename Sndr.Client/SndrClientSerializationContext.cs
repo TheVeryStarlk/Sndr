@@ -36,6 +36,7 @@ namespace Sndr.Client;
 [JsonSerializable(typeof(KeyResponse))]
 [JsonSerializable(typeof(KeyResponse.Key))]
 
+// Templates.
 [JsonSerializable(typeof(CreateTemplateRequest))]
 [JsonSerializable(typeof(TemplatesResponse))]
 [JsonSerializable(typeof(TemplateResponse))]
