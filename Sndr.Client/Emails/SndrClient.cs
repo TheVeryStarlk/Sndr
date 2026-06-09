@@ -7,7 +7,7 @@ namespace Sndr.Client;
 
 public sealed partial class SndrClient
 {
-    public async Task<EmailPageResponse?> GetEmailsAsync(EmailPageRequest request)
+    public async Task<EmailPageResponse?> GetEmailsAsync(EmailPageRequest request, CancellationToken cancellationToken = default)
     {
         var query = new Dictionary<string, string?>
         {
@@ -17,24 +17,24 @@ public sealed partial class SndrClient
         };
 
         var client = clientFactory.CreateClient(nameof(SndrClient));
-        var response = await client.GetAsync(QueryHelpers.AddQueryString("emails", query));
+        var response = await client.GetAsync(QueryHelpers.AddQueryString("emails", query), cancellationToken);
 
         // How about a context for each folder?
         return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.EmailPageResponse);
     }
 
-    public async Task<EmailResponse?> GetEmailAsync(EmailRequest request)
+    public async Task<EmailResponse?> GetEmailAsync(EmailRequest request, CancellationToken cancellationToken = default)
     {
         var client = clientFactory.CreateClient(nameof(SndrClient));
-        var response = await client.GetAsync($"emails/{Uri.EscapeDataString(request.Identifier)}");
+        var response = await client.GetAsync($"emails/{Uri.EscapeDataString(request.Identifier)}", cancellationToken);
 
         return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.EmailResponse);
     }
 
-    public async Task<SendEmailResponse?> SendEmailAsync(SendEmailRequest request)
+    public async Task<SendEmailResponse?> SendEmailAsync(SendEmailRequest request, CancellationToken cancellationToken = default)
     {
         var client = clientFactory.CreateClient(nameof(SndrClient));
-        var response = await client.PostAsJsonAsync("send", request, SndrClientSerializationContext.Default.SendEmailRequest);
+        var response = await client.PostAsJsonAsync("send", request, SndrClientSerializationContext.Default.SendEmailRequest, cancellationToken);
 
         return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.SendEmailResponse);
     }

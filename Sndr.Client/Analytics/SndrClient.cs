@@ -5,7 +5,7 @@ namespace Sndr.Client;
 
 public sealed partial class SndrClient
 {
-    public async Task<SummaryResponse?> GetSummaryAsync(SummaryRequest request)
+    public async Task<SummaryResponse?> GetSummaryAsync(SummaryRequest request, CancellationToken cancellationToken = default)
     {
         var query = new Dictionary<string, string?>
         {
@@ -13,7 +13,7 @@ public sealed partial class SndrClient
         };
 
         var client = clientFactory.CreateClient(nameof(SndrClient));
-        var response = await client.GetAsync(QueryHelpers.AddQueryString("analytics", query));
+        var response = await client.GetAsync(QueryHelpers.AddQueryString("analytics", query), cancellationToken);
 
         return await response.DeserializeOrThrowAsync(SndrClientSerializationContext.Default.SummaryResponse);
     }
