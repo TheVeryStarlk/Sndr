@@ -10,7 +10,7 @@ Still a work in progress & needs further testing. The important parts of the API
 The library can be easily used using DI or without it.
 
 ```cs
-var client = new SndrClient("...");
+var client = new SndrClient(Key);
 ```
 
 Or using DI.
@@ -18,7 +18,7 @@ Or using DI.
 ```cs
 var services = new ServiceCollection();
 
-services.AddSndrClient(options => options.Key = "...");
+services.AddSndrClient(options => options.Key = Key);
 
 var client = services
     .BuildServiceProvider()
@@ -32,7 +32,7 @@ You can configure the resilience handler by options.
 ```cs
 services.AddSndrClient(options =>
 {
-    options.Key = "...";
+    options.Key = Key;
     options.MaximumAttempts = 10;
     options.MaximumDelay = TimeSpan.FromMilliseconds(100);
 });
@@ -43,7 +43,7 @@ services.AddSndrClient(options =>
 This is just a single example of sending an email.
 
 ```cs
-var client = new SndrClient("...");
+var client = new SndrClient(Key);
 
 var request = new SendEmailRequest
 {
