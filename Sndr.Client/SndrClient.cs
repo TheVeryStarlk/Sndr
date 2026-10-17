@@ -4,20 +4,42 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Sndr.Client;
 
+/// <summary>
+/// Client for the SNDR API. Every resource (emails, domains, templates, API keys, webhooks and analytics)
+/// is exposed as a set of asynchronous methods on this type.
+/// </summary>
 public sealed partial class SndrClient
 {
     private readonly IHttpClientFactory clientFactory;
 
+    /// <summary>
+    /// Creates a client that resolves its <see cref="HttpClient"/> from the given factory.
+    /// The factory must have the named client registered through
+    /// <see cref="SndrClientServiceCollectionExtensions.AddSndrClientHttpClient"/>.
+    /// </summary>
+    /// <param name="clientFactory">The factory used to create the named SNDR <see cref="HttpClient"/>.</param>
     public SndrClient(IHttpClientFactory clientFactory)
     {
         this.clientFactory = clientFactory;
     }
 
-    public SndrClient(string key)
+    /// <summary>
+    /// Creates a standalone client authenticated with the given API key, using the default options.
+    /// </summary>
+    /// <param name="key">The SNDR API key.</param>
+    public SndrClient(string key) : this(options => options.Key = key)
+    {
+    }
+
+    /// <summary>
+    /// Creates a standalone client configured by the given callback.
+    /// </summary>
+    /// <param name="configure">Configures the client options. <see cref="SndrClientOptions.Key"/> must be set.</param>
+    public SndrClient(Action<SndrClientOptions> configure)
     {
         var collection = new ServiceCollection();
 
-        collection.AddSndrClientHttpClient(options => options.Key = key);
+        collection.AddSndrClientHttpClient(configure);
 
         clientFactory = collection
             .BuildServiceProvider()
