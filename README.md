@@ -55,3 +55,30 @@ var request = new SendEmailRequest
 
 var response = await client.SendEmailAsync(request);
 ```
+
+### Receiving webhooks
+
+Verify the `X-Sndr-Signature` header against the **raw** request body before parsing it.
+
+```cs
+app.MapPost("/webhooks/sndr", async (HttpRequest request) =>
+{
+    using var stream = new MemoryStream();
+
+    await request.Body.CopyToAsync(stream);
+
+    var body = stream.ToArray();
+
+    if (!SndrWebhook.Verify(body, request.Headers[SndrWebhook.SignatureHeader], secret))
+    {
+        return Results.BadRequest();
+    }
+
+    switch (SndrWebhook.Deserialize(body))
+    {
+        // ...
+    }
+
+    return Results.Ok();
+});
+```

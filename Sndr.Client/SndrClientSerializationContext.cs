@@ -8,10 +8,13 @@ using Sndr.Client.Keys;
 using Sndr.Client.Templates.Creating;
 using Sndr.Client.Templates.Getting;
 using Sndr.Client.Templates.Updating;
+using Sndr.Client.Webhooks.Creating;
+using Sndr.Client.Webhooks.Getting;
+using Sndr.Client.Webhooks.Receiving;
 
 namespace Sndr.Client;
 
-[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower)]
+[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower, AllowOutOfOrderMetadataProperties = true)]
 
 // Analytics.
 [JsonSerializable(typeof(SummaryRequest))]
@@ -44,4 +47,13 @@ namespace Sndr.Client;
 [JsonSerializable(typeof(UpdateTemplateRequest))]
 [JsonSerializable(typeof(TemplatesResponse))]
 [JsonSerializable(typeof(TemplateResponse))]
+
+// Webhooks.
+[JsonSerializable(typeof(CreateWebhookRequest))]
+[JsonSerializable(typeof(WebhookResponse))]
+[JsonSerializable(typeof(WebhookResponse.Webhook))]
+[JsonSerializable(typeof(WebhookEventPayload))]
+[JsonSerializable(typeof(EmailDeliveredEvent))]
+[JsonSerializable(typeof(EmailBouncedEvent))]
+[JsonSerializable(typeof(EmailUnsubscribedEvent))]
 internal sealed partial class SndrClientSerializationContext : JsonSerializerContext;
