@@ -15,6 +15,7 @@ namespace Sndr.Client;
 // Analytics.
 [JsonSerializable(typeof(SummaryRequest))]
 [JsonSerializable(typeof(SummaryResponse))]
+[JsonSerializable(typeof(SummaryResponse.Point))]
 
 // Domains.
 [JsonSerializable(typeof(CreateDomainRequest))]
